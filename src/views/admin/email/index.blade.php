@@ -9,8 +9,8 @@
     <div class="itop ">
         <form method="get" action="/email_admin/email/index" class="select_form">
         <div class="search_box ">
-            <input type="hidden" name="host_id"  value="{{$res['emailHost']->id}}">
-            <input type="search" name="ip" placeholder="IP" value="{{$res['search']['ip']}}">
+            <input type="hidden" name="site_id"  value="{{$res['emailSite']->id}}">
+            <input type="search" name="email" placeholder="Email" value="{{$res['search']['email']}}">
             <button class="" type="submit">搜索</button>
         </div>
         </form>
@@ -21,10 +21,9 @@
             <div class="table">
                 <ul class="table_header">
                     <li >ID</li>
-                    <li >IP</li>
-                    <li >country</li>
-                    <li >url</li>
-                    <li >查看次数</li>
+                    <li >Email</li>
+                    <li >title</li>
+                    <li >状态</li>
                     <li >日期</li>
                     <li >操作</li>
                 </ul>
@@ -32,21 +31,18 @@
                     @foreach($res['list'] as $v)
                     <ul class="table_tbody @if($v['viewed']==1) viewed @endif">
                         <li><input type="checkbox" class="delete_box" name="delete[]" value="{{$v['id']}}">{{$v['id']}}</li>
-                        <li class="wenzi">{{$v['ipv4']}}</li>
+                        <li class="wenzi">{{$v['email']}}</li>
                         <li>
-                            {{$v['country_iso']}}
+                            {{$v['title']}}
                         </li>
                         <li>
-                            {{$v['url']}}
-                        </li>
-                        <li>
-                            {{$v->view}}
+                            {{$v->status}}
                         </li>
                         <li>
                             {{$v->created_at}}
                         </li>
                         <li>
-                            <a class="badge badge-info ajax_get" data-href="/email_admin/email/detail?id={{$v['id']}}&host_id={{$res['emailHost']->id}}">查看</a>
+                            <a class="badge badge-info ajax_get" data-href="/email_admin/email/detail?id={{$v['id']}}&site_id={{$res['emailSite']->id}}">查看</a>
                         </li>
                     </ul>
                     @endforeach

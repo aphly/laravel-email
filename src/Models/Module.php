@@ -17,6 +17,7 @@ class Module extends Module_base
         $menu = Menu::create(['name' => '邮件','route' =>'','pid'=>0,'uuid'=>$manager->uuid,'type'=>1,'module_id'=>$module_id,'sort'=>10]);
         if($menu->id){
             $data=[];
+            $data[] =['name' => '邮件测试','route' =>'email_admin/email/test','pid'=>$menu->id,'uuid'=>$manager->uuid,'type'=>2,'module_id'=>$module_id,'sort'=>0];
             $data[] =['name' => '站点管理','route' =>'email_admin/site/index','pid'=>$menu->id,'uuid'=>$manager->uuid,'type'=>2,'module_id'=>$module_id,'sort'=>0];
             DB::table('admin_menu')->insert($data);
         }

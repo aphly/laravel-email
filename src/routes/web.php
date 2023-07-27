@@ -13,8 +13,8 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
-
-Route::post('email', 'Aphly\LaravelEmail\Controllers\Front\EmailController@add');
+Route::get('email/send', 'Aphly\LaravelEmail\Controllers\Front\EmailController@send');
+Route::post('email/send', 'Aphly\LaravelEmail\Controllers\Front\EmailController@send');
 
 Route::middleware(['web'])->group(function () {
 
@@ -34,7 +34,7 @@ Route::middleware(['web'])->group(function () {
                 Route::post($val[0].'/save', 'Aphly\LaravelEmail\Controllers\Admin'.$val[1].'@save');
                 Route::post($val[0].'/del', 'Aphly\LaravelEmail\Controllers\Admin'.$val[1].'@del');
             }
-
+            Route::match(['get','post'],'email/test', 'Aphly\LaravelEmail\Controllers\Admin\EmailController@test');
         });
     });
 

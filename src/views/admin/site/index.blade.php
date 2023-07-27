@@ -45,7 +45,7 @@
                         </li>
                         <li>
                             <a class="badge badge-info ajax_get" data-href="/email_admin/site/form?id={{$v['id']}}">编辑</a>
-                            <a class="badge badge-info ajax_get" data-href="/email_admin/email/index?host_id={{$v['id']}}">统计</a>
+                            <a class="badge badge-info ajax_get" data-href="/email_admin/email/index?site_id={{$v['id']}}">统计</a>
                         </li>
                     </ul>
                     @endforeach

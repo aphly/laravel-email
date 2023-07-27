@@ -8,27 +8,28 @@ use Aphly\Laravel\Models\Breadcrumb;
 use Aphly\LaravelEmail\Models\Email;
 use Aphly\LaravelEmail\Models\EmailSite;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Http;
 
 class EmailController extends Controller
 {
     public $index_url = '/email_admin/email/index';
     public $p_url = '/email_admin/Site/index';
 
-    private $currArr = ['name'=>'列表','key'=>'email'];
+    private $currArr = ['name'=>'邮件','key'=>'email'];
 
     public function index(Request $request)
     {
-        $Site_id = $request->query('site_id','');
-        $res['emailSite'] = EmailSite::where('id',$Site_id)->firstOrError();
-        $res['search']['ip'] = $request->query('ip', '');
+        $site_id = $request->query('site_id','');
+        $res['emailSite'] = EmailSite::where('id',$site_id)->firstOrError();
+        $res['search']['email'] = $request->query('email', '');
         $res['search']['string'] = http_build_query($request->query());
         $res['list'] = Email::when($res['search'],
                             function ($query, $search) {
-                                if($search['ip']!==''){
-                                    $query->where('ipv4', $search['ip']);
+                                if($search['email']!==''){
+                                    $query->where('email', $search['email']);
                                 }
                             })
-                        ->where('Site_id', $Site_id)
+                        ->where('Site_id', $site_id)
                         ->orderBy('id', 'desc')
                         ->Paginate(config('admin.perPage'))->withQueryString();
         $res['breadcrumb'] = Breadcrumb::render([
@@ -62,5 +63,19 @@ class EmailController extends Controller
         }
     }
 
-
+    public function test(Request $request)
+    {
+        if($request->isMethod('post')) {
+            $input = $request->all();
+            $input['appid'] = '2023072761470863';
+            $res = Http::connectTimeout(5)->post('http://test21.com/email/send',$input);
+            dd($res->body());
+            throw new ApiException(['code'=>1,'msg'=>'发送中','data'=>$res]);
+        }else{
+            $res['breadcrumb'] = Breadcrumb::render([
+                ['name'=>$this->currArr['name'].'测试','href'=>$this->index_url]
+            ]);
+            return $this->makeView('laravel-email::admin.email.test',['res'=>$res]);
+        }
+    }
 }

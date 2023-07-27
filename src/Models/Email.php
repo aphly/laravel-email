@@ -11,7 +11,7 @@ class Email extends Model
     protected $table = 'email';
     //public $timestamps = false;
     protected $fillable = [
-        'ipv4','url','referrer','keyword','language','platform','userAgent','webdriver','ipv6','view','host_id','country_iso'
+        'site_id','email','title','content'
     ];
 
 }

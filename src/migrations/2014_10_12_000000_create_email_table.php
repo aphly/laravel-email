@@ -19,6 +19,7 @@ return new class extends Migration
             $table->string('email',128);
             $table->string('title',128)->nullable();
             $table->text('content')->nullable();
+            $table->tinyInteger('status')->default(0);
             $table->unsignedBigInteger('created_at');
             $table->unsignedBigInteger('updated_at');
             //$table->engine = 'InnoDB';
