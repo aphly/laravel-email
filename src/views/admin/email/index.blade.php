@@ -23,6 +23,7 @@
                     <li >ID</li>
                     <li >Email</li>
                     <li >title</li>
+                    <li >类型</li>
                     <li >状态</li>
                     <li >日期</li>
                     <li >操作</li>
@@ -36,7 +37,18 @@
                             {{$v['title']}}
                         </li>
                         <li>
-                            {{$v->status}}
+                            @if($dict['email_type'])
+                                <span class="badge">{{$dict['email_type'][$v->type]}}</span>
+                            @endif
+                        </li>
+                        <li>
+                            @if($dict['email_status'])
+                                @if($v->status==1)
+                                    <span class="badge badge-success">{{$dict['email_status'][$v->status]}}</span>
+                                @else
+                                    <span class="badge badge-secondary">{{$dict['email_status'][$v->status]}}</span>
+                                @endif
+                            @endif
                         </li>
                         <li>
                             {{$v->created_at}}

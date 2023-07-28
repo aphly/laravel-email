@@ -2,6 +2,7 @@
 
 namespace Aphly\LaravelEmail\Models;
 
+use Aphly\Laravel\Models\Dict;
 use Aphly\Laravel\Models\Manager;
 use Aphly\Laravel\Models\Menu;
 use Aphly\Laravel\Models\Module as Module_base;
@@ -27,6 +28,30 @@ class Module extends Module_base
             $data[] =['role_id' => 1,'menu_id'=>$val->id];
         }
         DB::table('admin_role_menu')->insert($data);
+
+        $dict = Dict::create(['name' => '邮件状态','uuid'=>$manager->uuid,'key'=>'email_status','module_id'=>$module_id]);
+        if($dict->id){
+            $data=[];
+            $data[] =['dict_id' => $dict->id,'name'=>'未发送','value'=>'0'];
+            $data[] =['dict_id' => $dict->id,'name'=>'已发送','value'=>'1'];
+            DB::table('admin_dict_value')->insert($data);
+        }
+
+        $dict = Dict::create(['name' => '邮件类型','uuid'=>$manager->uuid,'key'=>'email_type','module_id'=>$module_id]);
+        if($dict->id){
+            $data=[];
+            $data[] =['dict_id' => $dict->id,'name'=>'同步','value'=>'0'];
+            $data[] =['dict_id' => $dict->id,'name'=>'队列','value'=>'1'];
+            DB::table('admin_dict_value')->insert($data);
+        }
+
+        $dict = Dict::create(['name' => '队列通道','uuid'=>$manager->uuid,'key'=>'email_queue_priority','module_id'=>$module_id]);
+        if($dict->id){
+            $data=[];
+            $data[] =['dict_id' => $dict->id,'name'=>'普通','value'=>'0'];
+            $data[] =['dict_id' => $dict->id,'name'=>'vip','value'=>'1'];
+            DB::table('admin_dict_value')->insert($data);
+        }
         return 'install_ok';
     }
 

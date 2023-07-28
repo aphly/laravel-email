@@ -2,22 +2,30 @@
 <div class="top-bar">
     <h5 class="nav-title">{!! $res['breadcrumb'] !!}</h5>
 </div>
+
 <div class="imain">
     <div class="">
         <div>
             <ul class="email">
-                <li><span>Ipv4</span><span>{{$res['info']->ipv4}}</span></li>
-                <li><span>Country</span><span>{{$res['info']->country_iso}}</span></li>
-                <li><span>Date</span><span>{{$res['info']->created_at}}</span></li>
-                <li><span>Ipv6</span><span>{{$res['info']->ipv6}}</span></li>
-                <li><span>Url</span><span>{{$res['info']->url}}</span></li>
-                <li><span>View</span><span>{{$res['info']->view}}</span></li>
-                <li><span>Referrer</span><span>{{$res['info']->referrer}}</span></li>
-                <li><span>Keyword</span><span>{{$res['info']->keyword}}</span></li>
-                <li><span>Language</span><span>{{$res['info']->language}}</span></li>
-                <li><span>Platform</span><span>{{$res['info']->platform}}</span></li>
-                <li><span>UserAgent</span><span>{{$res['info']->userAgent}}</span></li>
-                <li><span>Webdriver</span><span>{{$res['info']->webdriver}}</span></li>
+                <li><span>email</span><span>{{$res['info']->email}}</span></li>
+                <li><span>site_id</span><span>{{$res['emailSite']->host}}</span></li>
+                <li><span>type</span><span>
+                        @if($dict['email_type'])
+                            {{$dict['email_type'][$res['info']->type]}}
+                        @endif
+                    </span></li>
+                <li><span>queue_priority</span><span>
+                        @if($dict['email_queue_priority'])
+                            {{$dict['email_queue_priority'][$res['info']->queue_priority]}}
+                        @endif
+                    </span></li>
+                <li><span>status</span><span>
+                        @if($dict['email_status'])
+                           {{$dict['email_status'][$res['info']->status]}}
+                        @endif</span></li>
+                <li><span>created_at</span><span>{{$res['info']->created_at}}</span></li>
+                <li><span>title</span><span>{{$res['info']->title}}</span></li>
+                <li><span>content</span><span style="word-break: break-word;">{{$res['info']->content}}</span></li>
             </ul>
         </div>
     </div>

@@ -11,7 +11,12 @@ class Email extends Model
     protected $table = 'email';
     //public $timestamps = false;
     protected $fillable = [
-        'site_id','email','title','content'
+        'site_id','email','title','content','type','queue_priority','status'
     ];
+
+    function handle(){
+        $this->status=1;
+        return $this->save();
+    }
 
 }
