@@ -7,6 +7,16 @@
         @csrf
         <div class="">
             <div class="form-group">
+                <label for="">Appid</label>
+                <input type="text" name="appid" class="form-control " value="">
+                <div class="invalid-feedback"></div>
+            </div>
+            <div class="form-group">
+                <label for="">Secret</label>
+                <input type="text" name="secret" class="form-control " value="">
+                <div class="invalid-feedback"></div>
+            </div>
+            <div class="form-group">
                 <label for="">Email</label>
                 <input type="text" name="email" class="form-control " value="">
                 <div class="invalid-feedback"></div>
