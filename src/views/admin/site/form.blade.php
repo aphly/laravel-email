@@ -24,6 +24,41 @@
             </div>
             @endif
             <div class="form-group">
+              <label for="">smtp_host</label>
+              <input type="text" name="smtp_host" class="form-control " value="{{$res['info']->smtp_host}}">
+              <div class="invalid-feedback"></div>
+            </div>
+            <div class="form-group">
+                <label for="">smtp_port</label>
+                <input type="text" name="smtp_port" class="form-control " value="{{$res['info']->smtp_port}}">
+                <div class="invalid-feedback"></div>
+            </div>
+            <div class="form-group">
+                <label for="">smtp_encryption</label>
+                <input type="text" name="smtp_encryption" class="form-control " value="{{$res['info']->smtp_encryption}}">
+                <div class="invalid-feedback"></div>
+            </div>
+            <div class="form-group">
+                <label for="">smtp_username</label>
+                <input type="text" name="smtp_username" class="form-control " value="{{$res['info']->smtp_username}}">
+                <div class="invalid-feedback"></div>
+            </div>
+            <div class="form-group">
+                <label for="">smtp_password</label>
+                <input type="text" name="smtp_password" class="form-control " value="{{$res['info']->smtp_password}}">
+                <div class="invalid-feedback"></div>
+            </div>
+            <div class="form-group">
+                <label for="">smtp_from_address</label>
+                <input type="text" name="smtp_from_address" class="form-control " value="{{$res['info']->smtp_from_address}}">
+                <div class="invalid-feedback"></div>
+            </div>
+            <div class="form-group">
+                <label for="">smtp_from_name</label>
+                <input type="text" name="smtp_from_name" class="form-control " value="{{$res['info']->smtp_from_name}}">
+                <div class="invalid-feedback"></div>
+            </div>
+            <div class="form-group">
                 <label for="">状态</label>
                 <select name="status"  class="form-control">
                     @if(isset($dict['status']))

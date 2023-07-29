@@ -18,6 +18,13 @@ return new class extends Migration
             $table->unsignedBigInteger('appid')->index();
             $table->string('host',64)->index();
             $table->string('secret',64)->nullable();
+            $table->string('smtp_host',64)->nullable();
+            $table->string('smtp_port',16)->nullable();
+            $table->string('smtp_encryption',16)->nullable();
+            $table->string('smtp_username',64)->nullable();
+            $table->string('smtp_password',128)->nullable();
+            $table->string('smtp_from_address',64)->nullable();
+            $table->string('smtp_from_name',32)->nullable();
             $table->tinyInteger('status')->default(0)->nullable();
             $table->unsignedBigInteger('created_at');
             $table->unsignedBigInteger('updated_at');

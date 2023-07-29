@@ -23,7 +23,8 @@ class EmailController extends Controller
                         $input['site_id'] =$emailSite->id;
                         $email_obj = Email::create($input);
                         if($email_obj){
-                            (new MailSend($input['type']))->do($email_obj->email,new Send($email_obj),$input['queue_priority'],$email_obj);
+                            (new MailSend($input['type']))->do($email_obj->email,
+                                new Send($email_obj),$input['queue_priority'],$email_obj,$emailSite);
                         }
                     }
                 }

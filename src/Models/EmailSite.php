@@ -11,7 +11,8 @@ class EmailSite extends Model
     protected $table = 'email_site';
     //public $timestamps = false;
     protected $fillable = [
-        'appid','host','secret','status'
+        'appid','host','secret','status',
+        'smtp_host','smtp_port','smtp_encryption','smtp_username','smtp_password','smtp_from_address','smtp_from_name'
     ];
 
     function findOne(){
