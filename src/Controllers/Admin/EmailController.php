@@ -34,7 +34,7 @@ class EmailController extends Controller
                         ->Paginate(config('admin.perPage'))->withQueryString();
         $res['breadcrumb'] = Breadcrumb::render([
             ['name'=>$this->currArr['name'].'管理','href'=>$this->p_url],
-            ['name'=>$res['emailSite']->site,'href'=>$this->index_url.'?site_id='.$res['emailSite']->id],
+            ['name'=>$res['emailSite']->host,'href'=>$this->index_url.'?site_id='.$res['emailSite']->id],
         ]);
         return $this->makeView('laravel-email::admin.email.index', ['res' => $res]);
     }

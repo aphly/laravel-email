@@ -15,20 +15,26 @@ class EmailController extends Controller
     {
         if($request->isMethod('post')) {
             $input = $request->all();
-            $input = array_map(fn($i)=>trim($i),$input);
-            $url = parse_url($request->url());
-            if($input['appid'] && $url){
+            //$input = array_map(fn($i)=>trim($i),$input);
+            if($input['appid']){
                 $emailSite = EmailSite::where('appid',$input['appid'])->where('status',1)->firstOrError();
-                if($url['host']==$emailSite->host){
-                    if($this->sign($input,$emailSite->secret)==$input['sign']){
-                        $input['site_id'] =$emailSite->id;
-                        $email_obj = Email::create($input);
-                        if($email_obj){
-                            (new MailSend($input['type']))->do($email_obj->email,
-                                new Send($email_obj),$input['queue_priority'],$email_obj,$emailSite,$input['is_cc']);
-                        }
+                if($this->sign($input,$emailSite->secret)==$input['sign']){
+                    $input['site_id'] =$emailSite->id;
+                    if(empty($input['email']) || empty($input['title']) || empty($input['content'])){
+                        throw new ApiException(['code'=>1,'msg'=>'email or title or content error']);
                     }
+                    $email_obj = Email::create($input);
+                    if($email_obj){
+                        (new MailSend($input['type']))->do($email_obj->email,
+                            new Send($email_obj),$input['queue_priority'],$email_obj,$emailSite,$input['is_cc']);
+                    }else{
+                        throw new ApiException(['code'=>5,'msg'=>'error']);
+                    }
+                }else{
+                    throw new ApiException(['code'=>4,'msg'=>'appid error']);
                 }
+            }else{
+                throw new ApiException(['code'=>2,'msg'=>'no appid']);
             }
         }
         throw new ApiException(['code'=>0,'msg'=>'success']);
