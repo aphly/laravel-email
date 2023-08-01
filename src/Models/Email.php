@@ -11,7 +11,7 @@ class Email extends Model
     protected $table = 'email';
     //public $timestamps = false;
     protected $fillable = [
-        'site_id','email','title','content','type','queue_priority','status'
+        'site_id','email','title','content','type','queue_priority','status','is_cc'
     ];
 
     function handle(){

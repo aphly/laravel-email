@@ -59,6 +59,11 @@
                 <div class="invalid-feedback"></div>
             </div>
             <div class="form-group">
+                <label for="">抄送邮箱</label>
+                <input type="text" name="cc" class="form-control " value="{{$res['info']->cc}}">
+                <div class="invalid-feedback"></div>
+            </div>
+            <div class="form-group">
                 <label for="">状态</label>
                 <select name="status"  class="form-control">
                     @if(isset($dict['status']))

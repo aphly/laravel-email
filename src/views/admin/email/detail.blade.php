@@ -19,6 +19,11 @@
                             {{$dict['email_queue_priority'][$res['info']->queue_priority]}}
                         @endif
                     </span></li>
+                <li><span>is_cc</span><span>
+                        @if($dict['yes_no'])
+                            {{$dict['yes_no'][$res['info']->is_cc]}}
+                        @endif
+                    </span></li>
                 <li><span>status</span><span>
                         @if($dict['email_status'])
                            {{$dict['email_status'][$res['info']->status]}}

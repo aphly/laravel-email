@@ -53,6 +53,7 @@ class EmailSiteController extends Controller
     public function save(Request $request){
         $input = $request->all();
         if(empty($input['appid'])){
+            $input = array_map(fn($i)=>trim($i),$input);
             $input['appid'] = date('Ymd') . str_pad(mt_rand(1, 99999999), 8, '0', STR_PAD_LEFT);
             $input['secret'] = Str::random(32);
         }

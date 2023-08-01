@@ -38,6 +38,14 @@
                 <div class="invalid-feedback"></div>
             </div>
             <div class="form-group">
+                <label for="">是否抄送</label>
+                <select name="is_cc" class="form-control ">
+                    <option value="0">否</option>
+                    <option value="1">是</option>
+                </select>
+                <div class="invalid-feedback"></div>
+            </div>
+            <div class="form-group">
                 <label for="">Title</label>
                 <input type="text" name="title" class="form-control " value="">
                 <div class="invalid-feedback"></div>

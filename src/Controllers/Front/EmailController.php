@@ -15,6 +15,7 @@ class EmailController extends Controller
     {
         if($request->isMethod('post')) {
             $input = $request->all();
+            $input = array_map(fn($i)=>trim($i),$input);
             $url = parse_url($request->url());
             if($input['appid'] && $url){
                 $emailSite = EmailSite::where('appid',$input['appid'])->where('status',1)->firstOrError();
@@ -24,7 +25,7 @@ class EmailController extends Controller
                         $email_obj = Email::create($input);
                         if($email_obj){
                             (new MailSend($input['type']))->do($email_obj->email,
-                                new Send($email_obj),$input['queue_priority'],$email_obj,$emailSite);
+                                new Send($email_obj),$input['queue_priority'],$email_obj,$emailSite,$input['is_cc']);
                         }
                     }
                 }
@@ -34,6 +35,6 @@ class EmailController extends Controller
     }
 
     function sign($input,$secret){
-        return md5(md5($input['appid'].$input['email'].$secret).$input['timestamp']);
+        return md5(md5($input['appid'].$input['email'].$secret.$input['type'].$input['queue_priority'].$input['is_cc']).$input['timestamp']);
     }
 }

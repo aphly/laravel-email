@@ -21,6 +21,7 @@ return new class extends Migration
             $table->text('content')->nullable();
             $table->tinyInteger('type')->default(1);
             $table->tinyInteger('queue_priority')->default(0);
+            $table->tinyInteger('is_cc')->default(0);
             $table->tinyInteger('status')->default(0);
             $table->unsignedBigInteger('created_at');
             $table->unsignedBigInteger('updated_at');

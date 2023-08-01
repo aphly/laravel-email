@@ -12,7 +12,7 @@ class EmailSite extends Model
     //public $timestamps = false;
     protected $fillable = [
         'appid','host','secret','status',
-        'smtp_host','smtp_port','smtp_encryption','smtp_username','smtp_password','smtp_from_address','smtp_from_name'
+        'smtp_host','smtp_port','smtp_encryption','smtp_username','smtp_password','smtp_from_address','smtp_from_name','cc'
     ];
 
     function findOne(){

@@ -68,7 +68,7 @@ class EmailController extends Controller
         if($request->isMethod('post')) {
             $input = $request->all();
             $input['timestamp'] = time();
-            $input['sign'] = md5(md5($input['appid'].$input['email'].$input['secret']).$input['timestamp']);
+            $input['sign'] = md5(md5($input['appid'].$input['email'].$input['secret'].$input['type'].$input['queue_priority'].$input['is_cc']).$input['timestamp']);
             $res = Http::connectTimeout(5)->post('https://email.apixn.com/email/send',$input);
             throw new ApiException(['code'=>1,'msg'=>'发送中','data'=>['html'=>$res->body()]]);
         }else{
