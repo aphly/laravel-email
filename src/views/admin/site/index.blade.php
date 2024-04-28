@@ -33,7 +33,7 @@
                     <ul class="table_tbody">
                         <li><input type="checkbox" class="delete_box" name="delete[]" value="{{$v['id']}}">{{$v['id']}}</li>
                         <li>{{ $v['host'] }}</li>
-                        <li>{{ $v['appid'] }}</li>
+                        <li>{{ $v['app_id'] }}</li>
                         <li>
                             @if($dict['status'])
                                 @if($v['status']==1)
@@ -46,6 +46,7 @@
                         <li>
                             <a class="badge badge-info ajax_html" data-href="/email_admin/site/form?id={{$v['id']}}">编辑</a>
                             <a class="badge badge-info ajax_html" data-href="/email_admin/email/index?site_id={{$v['id']}}">统计</a>
+                            <a class="badge badge-info ajax_html" data-href="/email_admin/email/test?site_id={{$v['id']}}">测试</a>
                         </li>
                     </ul>
                     @endforeach

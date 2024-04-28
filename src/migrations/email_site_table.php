@@ -15,9 +15,10 @@ return new class extends Migration
     {
         Schema::create('email_site', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('appid')->index();
             $table->string('host',64)->index();
-            $table->string('secret',64)->nullable();
+            $table->unsignedBigInteger('app_id')->index();
+            $table->tinyInteger('type')->default(0);
+            $table->string('app_key',64)->nullable();
             $table->string('smtp_host',64)->nullable();
             $table->string('smtp_port',16)->nullable();
             $table->string('smtp_encryption',16)->nullable();

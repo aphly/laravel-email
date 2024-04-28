@@ -5,6 +5,7 @@ namespace Aphly\LaravelEmail\Controllers\Admin;
 use Aphly\Laravel\Exceptions\ApiException;
 use Aphly\Laravel\Models\Breadcrumb;
 
+use Aphly\LaravelEmail\Mail\Send;
 use Aphly\LaravelEmail\Models\Email;
 use Aphly\LaravelEmail\Models\EmailSite;
 use Illuminate\Http\Request;
@@ -13,6 +14,7 @@ use Illuminate\Support\Facades\Http;
 class EmailController extends Controller
 {
     public $index_url = '/email_admin/email/index';
+
     public $p_url = '/email_admin/site/index';
 
     private $currArr = ['name'=>'邮件','key'=>'email'];
@@ -31,7 +33,7 @@ class EmailController extends Controller
                             })
                         ->where('site_id', $site_id)
                         ->orderBy('id', 'desc')
-                        ->Paginate(config('admin.perPage'))->withQueryString();
+                        ->Paginate(config('base.perPage'))->withQueryString();
         $res['breadcrumb'] = Breadcrumb::render([
             ['name'=>$this->currArr['name'].'管理','href'=>$this->p_url],
             ['name'=>$res['emailSite']->host,'href'=>$this->index_url.'?site_id='.$res['emailSite']->id],
@@ -65,10 +67,40 @@ class EmailController extends Controller
 
     public function test(Request $request)
     {
+        $input = $request->all();
+        $res['emailSite'] = EmailSite::where('id',$input['site_id'])->firstOrError();
+        if($request->isMethod('post')) {
+            //$input['site_id'] = $res['emailSite']->id;
+            $input['type'] = $res['emailSite']->type?1:0;
+            $input['queue_priority'] = ($input['queue_priority']??0)?1:0;
+            $email_model = Email::create($input);
+            if($email_model->id){
+                $args = [
+                    'type'=>$res['emailSite']->type,
+                    'queue_priority'=>$input['queue_priority'],
+                    'emailSite'=>$res['emailSite'],
+                    'email_model'=>$email_model,
+                    'mail_build' => new Send($email_model)
+                ];
+                $email_model->send($args);
+                throw new ApiException(['code'=>0,'msg'=>'success']);
+            }else{
+                throw new ApiException(['code'=>5,'msg'=>'error']);
+            }
+        }else{
+            $res['breadcrumb'] = Breadcrumb::render([
+                ['name'=>$this->currArr['name'].'测试','href'=>$this->index_url]
+            ]);
+            return $this->makeView('laravel-email::admin.email.test',['res'=>$res]);
+        }
+    }
+
+    public function test_bf(Request $request)
+    {
         if($request->isMethod('post')) {
             $input = $request->all();
             $input['timestamp'] = time();
-            $input['sign'] = md5(md5($input['appid'].$input['email'].$input['secret'].$input['type'].$input['queue_priority'].$input['is_cc']).$input['timestamp']);
+            $input['sign'] = md5(md5($input['app_id'].$input['email'].$input['app_key'].$input['type'].$input['queue_priority'].$input['is_cc']).$input['timestamp']);
             $res = Http::connectTimeout(5)->post('https://email.apixn.com/email/send',$input);
             throw new ApiException(['code'=>1,'msg'=>'发送中','data'=>['html'=>$res->body()]]);
         }else{

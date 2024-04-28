@@ -9,3 +9,5 @@ mysql5.7+<br>
 `composer require aphly/laravel-email` <br>
 `php artisan vendor:publish --provider="Aphly\LaravelEmail\EmailServiceProvider"` <br>
 
+队列<br>
+`php artisan queue:work --queue=email_vip,email`

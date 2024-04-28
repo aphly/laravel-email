@@ -14,15 +14,26 @@
             @if($res['info']->id)
             <div class="form-group">
                 <label for="">Appid</label>
-                <input type="text" name="appid" class="form-control " value="{{$res['info']->appid}}">
+                <input type="text" name="app_id" class="form-control " value="{{$res['info']->app_id}}">
                 <div class="invalid-feedback"></div>
             </div>
             <div class="form-group">
-                <label for="">secret</label>
-                <input type="text" name="secret" class="form-control " value="{{$res['info']->secret}}">
+                <label for="">Appkey</label>
+                <input type="text" name="app_key" class="form-control " value="{{$res['info']->app_key}}">
                 <div class="invalid-feedback"></div>
             </div>
             @endif
+            <div class="form-group">
+                <label for="">邮件类型</label>
+                <select name="type" class="form-control">
+                    @if(isset($dict['email_type']))
+                        @foreach($dict['email_type'] as $key=>$val)
+                            <option value="{{$key}}" @if($res['info']->type==$key) selected @endif>{{$val}}</option>
+                        @endforeach
+                    @endif
+                </select>
+                <div class="invalid-feedback"></div>
+            </div>
             <div class="form-group">
               <label for="">smtp_host</label>
               <input type="text" name="smtp_host" class="form-control " value="{{$res['info']->smtp_host}}">

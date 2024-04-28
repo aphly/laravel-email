@@ -6,41 +6,37 @@
 <div class="imain">
     <div class="">
         <div>
-            <ul class="email">
-                <li><span>email</span><span>{{$res['info']->email}}</span></li>
-                <li><span>site_id</span><span>{{$res['emailSite']->host}}</span></li>
-                <li><span>type</span><span>
+            <ul class="detail_view">
+                <li><div class="view_li_l">email</div><div class="view_li_r">{{$res['info']->email}}</div></li>
+                <li><div class="view_li_l">site_id</div><div class="view_li_r">{{$res['emailSite']->host}}</div></li>
+                <li><div class="view_li_l">type</div><div class="view_li_r">
                         @if($dict['email_type'])
                             {{$dict['email_type'][$res['info']->type]}}
                         @endif
-                    </span></li>
-                <li><span>queue_priority</span><span>
+                    </div></li>
+                <li><div class="view_li_l">queue_priority</div><div class="view_li_r">
                         @if($dict['email_queue_priority'])
                             {{$dict['email_queue_priority'][$res['info']->queue_priority]}}
                         @endif
-                    </span></li>
-                <li><span>is_cc</span><span>
-                        @if($dict['yes_no'])
-                            {{$dict['yes_no'][$res['info']->is_cc]}}
-                        @endif
-                    </span></li>
-                <li><span>status</span><span>
+                    </div></li>
+                <li><div class="view_li_l">status</div><div class="view_li_r">
                         @if($dict['email_status'])
                            {{$dict['email_status'][$res['info']->status]}}
-                        @endif</span></li>
-                <li><span>created_at</span><span>{{$res['info']->created_at}}</span></li>
-                <li><span>title</span><span>{{$res['info']->title}}</span></li>
-                <li><span>content</span><span style="word-break: break-word;">{{$res['info']->content}}</span></li>
+                        @endif</div></li>
+                <li><div class="view_li_l">res</div><div class="view_li_r">
+                        {{$res['info']->res}}
+                    </div></li>
+                <li><div class="view_li_l">title</div><div class="view_li_r">{{$res['info']->title}}</div></li>
+                <li><div class="view_li_l">content</div><div class="view_li_r" >{{$res['info']->content}}</div></li>
+                <li><div class="view_li_l">created_at</div><div class="view_li_r">{{$res['info']->created_at}}</div></li>
+                <li><div class="view_li_l">updated_at</div><div class="view_li_r">{{$res['info']->updated_at}}</div></li>
             </ul>
         </div>
     </div>
 
 </div>
 <style>
-    .email{}
-    .email li{line-height:30px;display:flex}
-    .email li span:first-child{margin-right:20px;width:100px;text-align:right;color:#666}
-    .email li span:last-child{font-weight:600}
+
 </style>
 <script>
 

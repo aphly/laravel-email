@@ -16,13 +16,14 @@ return new class extends Migration
         Schema::create('email', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('site_id')->index();
-            $table->string('email',128);
+            $table->string('email',64);
             $table->string('title',128)->nullable();
             $table->text('content')->nullable();
-            $table->tinyInteger('type')->default(1);
+            $table->tinyInteger('type')->default(0);
             $table->tinyInteger('queue_priority')->default(0);
             $table->tinyInteger('is_cc')->default(0);
             $table->tinyInteger('status')->default(0);
+            $table->text('res')->nullable();
             $table->unsignedBigInteger('created_at');
             $table->unsignedBigInteger('updated_at');
             //$table->engine = 'InnoDB';

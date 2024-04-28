@@ -6,16 +6,7 @@
     <form method="post"  action="/email_admin/email/test" class="save_form">
         @csrf
         <div class="">
-            <div class="form-group">
-                <label for="">Appid</label>
-                <input type="text" name="appid" class="form-control " value="">
-                <div class="invalid-feedback"></div>
-            </div>
-            <div class="form-group">
-                <label for="">Secret</label>
-                <input type="text" name="secret" class="form-control " value="">
-                <div class="invalid-feedback"></div>
-            </div>
+            <input type="hidden" name="site_id" value="{{$res['emailSite']->id}}">
             <div class="form-group">
                 <label for="">Email</label>
                 <input type="text" name="email" class="form-control " value="">
@@ -34,14 +25,6 @@
                 <select name="queue_priority" class="form-control ">
                     <option value="0">普通</option>
                     <option value="1">Vip</option>
-                </select>
-                <div class="invalid-feedback"></div>
-            </div>
-            <div class="form-group">
-                <label for="">是否抄送</label>
-                <select name="is_cc" class="form-control ">
-                    <option value="0">否</option>
-                    <option value="1">是</option>
                 </select>
                 <div class="invalid-feedback"></div>
             </div>

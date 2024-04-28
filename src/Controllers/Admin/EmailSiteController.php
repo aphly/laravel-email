@@ -26,7 +26,7 @@ class EmailSiteController extends Controller
                 }
             })
             ->orderBy('id','desc')
-            ->Paginate(config('admin.perPage'))->withQueryString();
+            ->Paginate(config('base.perPage'))->withQueryString();
         $res['breadcrumb'] = Breadcrumb::render([
             ['name'=>$this->currArr['name'].'管理','href'=>$this->index_url]
         ]);
@@ -52,10 +52,10 @@ class EmailSiteController extends Controller
 
     public function save(Request $request){
         $input = $request->all();
-        if(empty($input['appid'])){
+        if(empty($input['app_id'])){
             $input = array_map(fn($i)=>trim($i),$input);
-            $input['appid'] = date('Ymd') . str_pad(mt_rand(1, 99999999), 8, '0', STR_PAD_LEFT);
-            $input['secret'] = Str::random(32);
+            $input['app_id'] = date('Ymd') . str_pad(mt_rand(1, 99999999), 8, '0', STR_PAD_LEFT);
+            $input['app_key'] = Str::random(32);
         }
         EmailSite::updateOrCreate(['id'=>$request->query('id',0)],$input);
         throw new ApiException(['code'=>0,'msg'=>'success','data'=>['redirect'=>$this->index_url]]);
