@@ -3,6 +3,7 @@
 namespace Aphly\LaravelEmail\Controllers\Admin;
 
 use Aphly\Laravel\Exceptions\ApiException;
+use Aphly\Laravel\Libs\Verifier;
 use Aphly\Laravel\Models\Breadcrumb;
 
 use Aphly\LaravelEmail\Models\EmailSite;
@@ -52,6 +53,14 @@ class EmailSiteController extends Controller
 
     public function save(Request $request){
         $input = $request->all();
+        Verifier::handle($input,[
+            'host'=>'required',
+            'status'=>'required',
+            'type'=>'required','smtp_host'=>'required',
+            'smtp_port'=>'required','smtp_encryption'=>'required',
+            'smtp_username'=>'required','smtp_password'=>'required',
+            'smtp_from_address'=>'required','smtp_from_name'=>'required',
+        ]);
         if(empty($input['app_id'])){
             $input = array_map(fn($i)=>trim($i),$input);
             $input['app_id'] = date('Ymd') . str_pad(mt_rand(1, 99999999), 8, '0', STR_PAD_LEFT);
