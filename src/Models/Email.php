@@ -19,8 +19,9 @@ class Email extends Model
     static public function clearOverDays(int $days=30){
         $clear = Cache::get('clearEmailOverDays');
         if(!$clear){
-            Cache::set('clearEmailOverDays',1);
-            self::where('created_at','<',time()-3600*24*$days)->delete();
+            $seconds = 3600*24*$days;
+            Cache::put('clearEmailOverDays',1,$seconds);
+            self::where('created_at','<',time()-$seconds)->delete();
         }
     }
 
