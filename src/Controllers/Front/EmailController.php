@@ -16,12 +16,13 @@ class EmailController extends Controller
         if($request->isMethod('post')) {
             list($input,$emailSite) = $this->_check($request);
             $input['site_id'] = $emailSite->id;
+            $input['type'] = $emailSite->type?1:0;
+            $input['queue_priority'] = ($input['queue_priority']??0)?1:0;
             $email_model = Email::create($input);
             if($email_model->id){
                 $input['email_model'] = $email_model;
                 $input['mail_build'] = new Send($email_model);
                 $input['emailSite'] = $emailSite;
-                $input['queue_priority'] = ($input['queue_priority']??0)?1:0;
                 $email_model->send($input);
                 throw new ApiException(['code'=>0,'msg'=>'success']);
             }else{
@@ -47,13 +48,11 @@ class EmailController extends Controller
             'sign.required'=>'签名缺少',
         ]);
         $emailSite = EmailSite::where('app_id',$input['app_id'])->statusOrError();
-        if($this->sign($input,$emailSite->app_key)!=$input['sign']){
+        if(\Aphly\Laravel\Libs\Email::sign($input,$emailSite->app_key)!=$input['sign']){
             throw new ApiException(['code'=>4,'msg'=>'sign error']);
         }
         return [$input,$emailSite];
     }
 
-    function sign($input,$app_key){
-        return md5(md5($input['app_id'].$input['email'].$app_key).$input['timestamp']);
-    }
+
 }
