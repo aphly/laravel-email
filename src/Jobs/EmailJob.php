@@ -53,7 +53,7 @@ class EmailJob implements ShouldQueue
                 }
                 Email::where('id',$this->arr['email_model']->id)->update(['res'=>'success','status'=>1]);
             }catch (\Exception $e) {
-                Email::where('id',$this->arr['email_model']->id)->update(['res'=>$e->getMessage()]);
+                Email::where('id',$this->arr['email_model']->id)->update(['res'=>$e->getMessage(),'status'=>2]);
             }
         }
     }
