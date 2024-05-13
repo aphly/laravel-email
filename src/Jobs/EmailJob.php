@@ -21,6 +21,7 @@ class EmailJob implements ShouldQueue
      * @return void
      */
     public $timeout = 30;
+    public $retryAfter= 35;
 
     private $arr;
 
