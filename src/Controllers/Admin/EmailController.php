@@ -17,7 +17,7 @@ class EmailController extends Controller
 
     public $p_url = '/email_admin/site/index';
 
-    private $currArr = ['name'=>'邮件','key'=>'email'];
+    public $currArr = ['name'=>'邮件','key'=>'email','admin'=>'email_admin'];
 
     public function index(Request $request)
     {
@@ -101,7 +101,7 @@ class EmailController extends Controller
             $input = $request->all();
             $input['timestamp'] = time();
             $input['sign'] = md5(md5($input['app_id'].$input['email'].$input['app_key'].$input['type'].$input['queue_priority'].$input['is_cc']).$input['timestamp']);
-            $res = Http::connectTimeout(5)->post('https://email.apixn.com/email/send',$input);
+            $res = Http::connectTimeout(5)->post(config('base.email_host').'/email/send',$input);
             throw new ApiException(['code'=>1,'msg'=>'发送中','data'=>['html'=>$res->body()]]);
         }else{
             $res['breadcrumb'] = Breadcrumb::render([

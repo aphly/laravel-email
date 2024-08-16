@@ -14,7 +14,7 @@ class EmailSiteController extends Controller
 {
     public $index_url='/email_admin/site/index';
 
-    private $currArr = ['name'=>'站点','key'=>'site'];
+    public $currArr = ['name'=>'站点','key'=>'site','admin'=>'email_admin'];
 
     public function index(Request $request)
     {
