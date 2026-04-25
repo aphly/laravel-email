@@ -14,14 +14,14 @@ class EmailJob implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
-    //public $tries = 2;
+    public $tries = 2;
     /**
      * Create a new job instance.
      *
      * @return void
      */
     public $timeout = 30;
-    public $retryAfter= 35;
+    //public $retryAfter= 35;
 
     private $arr;
 
