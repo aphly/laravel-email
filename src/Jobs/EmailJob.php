@@ -50,7 +50,11 @@ class EmailJob implements ShouldQueue
                 if($this->arr['emailSite']->cc){
                     Mail::to($this->arr['email_model']->email)->cc($this->arr['emailSite']->cc)->send($this->arr['mail_build']);
                 }else{
-                    Mail::to($this->arr['email_model']->email)->send($this->arr['mail_build']);
+                    if($this->arr['email_model']->cc){
+                        Mail::to($this->arr['email_model']->email)->cc($this->arr['email_model']->cc)->send($this->arr['mail_build']);
+                    }else{
+                        Mail::to($this->arr['email_model']->email)->send($this->arr['mail_build']);
+                    }
                 }
                 Email::where('id',$this->arr['email_model']->id)->update(['res'=>'success','status'=>1]);
             }catch (\Exception $e) {

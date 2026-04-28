@@ -13,7 +13,7 @@ class Email extends Model
     protected $table = 'email';
     //public $timestamps = false;
     protected $fillable = [
-        'site_id','email','title','content','type','queue_priority','status','is_cc','res'
+        'site_id','email','title','content','type','queue_priority','status','is_cc','res','cc'
     ];
 
     static public function clearOverDays(int $days=30){
