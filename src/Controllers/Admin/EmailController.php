@@ -9,7 +9,9 @@ use Aphly\LaravelEmail\Mail\Send;
 use Aphly\LaravelEmail\Models\Email;
 use Aphly\LaravelEmail\Models\EmailSite;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Mail;
 
 class EmailController extends Controller
 {
@@ -64,6 +66,7 @@ class EmailController extends Controller
             throw new ApiException(['code'=>0,'msg'=>'操作成功','data'=>['redirect'=>$redirect]]);
         }
     }
+
 
     public function test(Request $request)
     {

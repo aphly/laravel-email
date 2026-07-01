@@ -45,18 +45,33 @@ class EmailJob implements ShouldQueue
     public function handle()
     {
         if($this->arr['email_model']->email && $this->arr['mail_build']){
-            $this->arr['emailSite']->config();
+            $smtpConfig = [
+                'transport'  => 'smtp',
+                'host'       => $this->arr['emailSite']->smtp_host,
+                'port'       => $this->arr['emailSite']->smtp_port,
+                'encryption' => $this->arr['emailSite']->smtp_encryption,
+                'username'   => $this->arr['emailSite']->smtp_username,
+                'password'   => $this->arr['emailSite']->smtp_password,
+                'timeout'    => null,
+                'local_domain' => '',
+            ];
+            config([
+                'mail.from.address' => $this->arr['emailSite']->smtp_from_address,
+                'mail.from.name'    => $this->arr['emailSite']->smtp_from_name,
+                'mail.mailers.dynamic_smtp' => $smtpConfig
+            ]);
             try{
                 if($this->arr['emailSite']->cc){
-                    Mail::to($this->arr['email_model']->email)->cc($this->arr['emailSite']->cc)->send($this->arr['mail_build']);
+                    Mail::mailer('dynamic_smtp')->to($this->arr['email_model']->email)->cc($this->arr['emailSite']->cc)->send($this->arr['mail_build']);
                 }else{
                     if($this->arr['email_model']->cc){
-                        Mail::to($this->arr['email_model']->email)->cc($this->arr['email_model']->cc)->send($this->arr['mail_build']);
+                        Mail::mailer('dynamic_smtp')->to($this->arr['email_model']->email)->cc($this->arr['email_model']->cc)->send($this->arr['mail_build']);
                     }else{
-                        Mail::to($this->arr['email_model']->email)->send($this->arr['mail_build']);
+                        Mail::mailer('dynamic_smtp')->to($this->arr['email_model']->email)->send($this->arr['mail_build']);
                     }
                 }
                 Email::where('id',$this->arr['email_model']->id)->update(['res'=>'success','status'=>1]);
+                app('mail.manager')->forgetMailers();
             }catch (\Exception $e) {
                 Email::where('id',$this->arr['email_model']->id)->update(['res'=>$e->getMessage(),'status'=>2]);
             }
